@@ -1,1 +1,0 @@
-The Grammy award-winning singer. Who has been less active on digital platforms in recent weeks. Explained her
