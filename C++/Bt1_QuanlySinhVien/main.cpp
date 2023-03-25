@@ -1,13 +1,26 @@
+/*
+ * File: main.cpp
+ * Author: Linh Pham
+ * Date: 24/03/2023
+ * Description: Chương trình quản lý sinh viên
+ */
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
 #include <vector>
-#include <algorithm>
+#include <stdlib.h>
 
 using namespace std;
 
-
-/*--------------------------------------MACRO NHAP THONG TIN----------------------------------*/
+/*
+ * Function: MACRO ENTER_INFORMATION
+ * Description: Macro phần nhập thông tin Sinh Viên
+ * Input:
+ *   content - Nội dung cần nhập
+ *   format - định dạng kiểu dữ liệu
+ *   variable - biến cần nhập vào
+ *   condition - điều kiện để nhập
+ */
 #define ENTER_INFORMATION(content, format, variable, condition) \
     do                                                          \
     {                                                           \
@@ -15,7 +28,12 @@ using namespace std;
         scanf(format, variable);                                \
     } while (condition)
 
-/*------------------------------------MACRO HIEN THI THONG TIN-------------------------------*/
+/*
+ * Function: MACRO PRINT_INFORMATION
+ * Description: Macro phần hiển thị thông tin Sinh Viên
+ * Input:
+ *   object - đối tượng cần hiển thị
+ */
 #define PRINT_INFORMATION(object)                                                          \
     printf(" %d\t| %s\t| %d\t|   %s\t\t|", object.getIDStudent(), object.getNameStudent(), \
            object.getAgeStudent(), object.getGenderStudent());                             \
@@ -23,7 +41,42 @@ using namespace std;
            object.getScoreChemistry());                                                    \
     printf("   %.2f\t|   %s\n", object.getScoreAvarge(), object.getRankStudent())
 
-/*---------------------------------------CLASS SINH VIEN-------------------------------------*/
+/*
+ * Function: MACRO CHECK_LISTSTUDENT
+ * Description: Macro kiểm tra danh sách có sinh viên không
+ * Input:
+ *   notification - Nội dung thông báo
+ *   content - Nội dung Method Menu
+ */
+#define CHECK_LISTSTUDENT(notification, content) \
+    if (listStudent.empty())                     \
+    {                                            \
+        printf("Danh sach Sinh Vien trong !\n"); \
+        printf(notification);                    \
+    }                                            \
+    else                                         \
+    {                                            \
+        content                                  \
+    }
+
+/*
+ * Function: MACRO DOWHILE_METHODMENU
+ * Description: Macro sử dụng chức năng của từng method
+ * Input:
+ *   content - Nội dung chức năng của từng method
+ */
+#define DOWHILE_METHODMENU(content)                            \
+    do                                                         \
+    {                                                          \
+        content                                                \
+        printf("- Nhan phim '0' => De Thoat chuc nang\n");     \
+        scanf("%d", &key);                                     \
+    } while (key == 1)
+
+/*
+ * Function: Class Sinh viên
+ * Description: Chứa Property & Method sử dụng cho class sinh viên
+ */
 class Student
 {
 private:
@@ -59,13 +112,23 @@ public:
     char *getRankStudent();
 };
 
-/*---------------------------------------ĐĂT TÊN SINH VIÊN-----------------------------------*/
+/*
+ * Function: Method setNameStudent
+ * Description: Đặt tên cho sinh viên
+ * Input:
+ *   nameStudent - Mảng chuỗi kí tự chứa tên
+ */
 void Student::setNameStudent(const char nameStudent[])
 {
     strcpy(Student::nameStudent, nameStudent);
 }
 
-/*-------------------------------------ĐĂT GIỚI TÍNH SINH VIÊN-------------------------------*/
+/*
+ * Function: Method setGenderStudent
+ * Description: Đặt giới tính cho sinh viên
+ * Input:
+ *   genderStudent - Mảng chuỗi kí tự chưa giới tính
+ */
 void Student::setGenderStudent(const char genderStudent[])
 {
     if (strcmp((char *)"Nam", genderStudent) != 0 && strcmp((char *)"Nu", genderStudent) != 0)
@@ -78,43 +141,65 @@ void Student::setGenderStudent(const char genderStudent[])
     }
 }
 
-/*-------------------------------------ĐĂT TUỔI SINH VIÊN------------------------------------*/
+/*
+ * Function: Method setAgeStudent
+ * Description: Đặt tuổi cho sinh viên
+ * Input:
+ *   ageStudent - uint8_t tuổi
+ */
 void Student::setAgeStudent(uint8_t ageStudent)
 {
     Student::ageStudent = ageStudent;
 }
 
-/*-------------------------------------ĐĂT ĐIỂM HÓA SINH VIÊN--------------------------------*/
+/*
+ * Function: Method setScoreChemistry
+ * Description: Đặt điểm hóa cho sinh viên
+ * Input:
+ *   scoreChemistry - float điểm hóa
+ */
 void Student::setScoreChemistry(float scoreChemistry)
 {
     Student::scoreChemistry = scoreChemistry;
 }
 
-/*-------------------------------------ĐĂT ĐIỂM TOÁN SINH VIÊN-------------------------------*/
+/*
+ * Function: Method setScoreMath
+ * Description: Đặt điểm toán cho sinh viên
+ * Input:
+ *   scoreMath - float điểm toán
+ */
 void Student::setScoreMath(float scoreMath)
 {
     Student::scoreMath = scoreMath;
 }
 
-/*-------------------------------------ĐĂT ĐIỂM LÝ SINH VIÊN---------------------------------*/
+/*
+ * Function: Method setScoreMath
+ * Description: Đặt điểm lý cho sinh viên
+ * Input:
+ *   scoreMath - float điểm lý
+ */
 void Student::setScorePhysic(float scorePhysic)
 {
-    if (scorePhysic > 10 || scorePhysic < 0)
-    {
-        printf("ERROR! Diem Ly khong hop le");
-        Student::scorePhysic = 0;
-    }
-    else
-    {
-        Student::scorePhysic = scorePhysic;
-    }
+    Student::scorePhysic = scorePhysic;
 }
 
-/*------------------------------------CONSTRUCTOR SINH VIÊN----------------------------------*/
+/*
+ * Function: Constructor Student
+ * Description: Khởi tạo dữ liệu cho mỗi Sinh viên
+ * Input:
+ *   nameStudent - Mảng chuỗi kí tự chứa tên
+ *   genderStudent - Mảng chuỗi kí tự chưa giới tính
+ *   ageStudent - uint8_t tuổi
+ *   scoreMath - float điểm lý
+ *   scoreChemistry - float điểm hóa
+ *   scoreMath - float điểm toán
+ */
 Student::Student(const char nameStudent[], const char genderStudent[], const uint8_t ageStudent,
                  const float scoreMath, const float scorePhysic, const float scoreChemistry)
 {
-    //Tự động tạo ID cho Sinh viên
+    // Tự động tạo ID cho Sinh viên
     static uint8_t s_Id = 100;
     Student::idStudent = s_Id;
     s_Id++;
@@ -132,57 +217,102 @@ Student::Student(const char nameStudent[], const char genderStudent[], const uin
     Student::scoreChemistry = scoreChemistry;
 }
 
-/*-------------------------------------LẤY ID SINH VIÊN-------------------------------------*/
+/*
+ * Function: Method getIDStudent
+ * Description: Lấy ID của Sinh viên
+ * Output:
+ *   idStudent - uint8_t id
+ */
 uint8_t Student::getIDStudent()
 {
     return Student::idStudent;
 }
 
-/*-------------------------------------LẤY TÊN SINH VIÊN-----------------------------------*/
+/*
+ * Function: Method getNameStudent
+ * Description: Lấy tên của Sinh viên
+ * Output:
+ *   nameStudent - char* tên
+ */
 char *Student::getNameStudent()
 {
     return Student::nameStudent;
 }
 
-/*----------------------------------LẤY GIỚI TÍNH SINH VIÊN-------------------------------*/
+/*
+ * Function: Method getGenderStudent
+ * Description: Lấy giới tính của Sinh viên
+ * Output:
+ *   genderStudent - char* giới tính
+ */
 char *Student::getGenderStudent()
 {
     return Student::genderStudent;
 }
 
-/*-------------------------------------LẤY TUỔI SINH VIÊN----------------------------------*/
+/*
+ * Function: Method getAgeStudent
+ * Description: Lấy tuổi của Sinh viên
+ * Output:
+ *   ageStudent - uint8_t tuổi
+ */
 uint8_t Student::getAgeStudent()
 {
 
     return Student::ageStudent;
 }
 
-/*----------------------------------LẤY ĐIỂM HÓA SINH VIÊN--------------------------------*/
+/*
+ * Function: Method getScoreChemistry
+ * Description: Lấy điểm hóa của Sinh viên
+ * Output:
+ *   scoreChemistry - float điểm hóa
+ */
 float Student::getScoreChemistry()
 {
     return Student::scoreChemistry;
 }
 
-/*----------------------------------LẤY ĐIỂM LÝ SINH VIÊN--------------------------------*/
+/*
+ * Function: Method getScorePhysic
+ * Description: Lấy điểm lý của Sinh viên
+ * Output:
+ *   scorePhysic - float điểm lý
+ */
 float Student::getScorePhysic()
 {
     return Student::scorePhysic;
 }
 
-/*----------------------------------LẤY ĐIỂM TOÁN SINH VIÊN------------------------------*/
+/*
+ * Function: Method getScoreMath
+ * Description: Lấy điểm toán của Sinh viên
+ * Output:
+ *   scoreMath - float điểm toán
+ */
 float Student::getScoreMath()
 {
     return Student::scoreMath;
 }
 
-/*-----------------------------LẤY ĐIỂM TRUNG BÌNH SINH VIÊN-----------------------------*/
+/*
+ * Function: Method getScoreAvarge
+ * Description: Tính toán &Lấy điểm toán của Sinh viên
+ * Output:
+ *   scoreAvarge - float điểm TBinh
+ */
 float Student::getScoreAvarge()
 {
     Student::scoreAvarge = (Student::scoreMath + Student::scorePhysic + Student::scoreChemistry) / 3;
     return Student::scoreAvarge;
 }
 
-/*-----------------------------------LẤY HỌC LỰC SINH VIÊN-------------------------------*/
+/*
+ * Function: Method getRankStudent
+ * Description: Xét học lực dựa vào điểm TB
+ * Output:
+ *   getRankStudent - char* rankStudent
+ */
 char *Student::getRankStudent()
 {
     float score = Student::getScoreAvarge();
@@ -207,7 +337,10 @@ char *Student::getRankStudent()
     return Student::rankStudent;
 }
 
-/*---------------------------------------CLASS MENU-------------------------------------*/
+/*
+ * Function: Class Menu
+ * Description: Chứa Property & Method sử dụng cho chương trình quản lý sinh viên
+ */
 class Menu
 {
 private:
@@ -223,7 +356,10 @@ public:
     void softOfByName();
 };
 
-/*-------------------------------------THÊM SINH VIÊN-----------------------------------*/
+/*
+ * Function: Method addStudent
+ * Description: Thêm TT Sinh viên vào danh sách
+ */
 void Menu::addStudent()
 {
     char name[20];
@@ -234,8 +370,8 @@ void Menu::addStudent()
     float chemistry;
     uint8_t key;
 
-    do
-    {
+    DOWHILE_METHODMENU
+    (
         printf("/* KHAI BAO THONG TIN SINH VIEN */\n");
 
         ENTER_INFORMATION("Nhap ten: ", "%s", &name, 0);
@@ -255,34 +391,39 @@ void Menu::addStudent()
         listStudent.push_back(student);
 
         printf("- Nhan phim '1' => De tiep tuc Them sinh vien\n");
-        printf("- Nhan phim Bat ky => De Thoat chuc nang\n");
-        scanf("%d", &key);
-
-    } while (key == 1);
+    );
 }
 
-/*-----------------------------HIỂN THỊ DANH SÁCH SINH VIÊN-----------------------------*/
+/*
+ * Function: Method displayStudent
+ * Description: Hiển thị danh sách sinh viên
+ */
 void Menu::displayStudent()
 {
     uint8_t key;
 
-    do
-    {
+    CHECK_LISTSTUDENT
+    (
+        "KHONG THE HIEN THI!\n",
+        DOWHILE_METHODMENU
+            (
+                printf("\n------------------------------------DANH SACH SINH VIEN-----------------------------------\n");
+                printf("  ID\t| Ten\t| Tuoi\t|  Gioi Tinh\t|  Toan\t|  Ly\t|  Hoa\t|   DiemTB\t|  HocLuc\n");
+                for (Student student : listStudent) 
+                {
+                    PRINT_INFORMATION(student);
+                }
 
-        printf("\n------------------------------------DANH SACH SINH VIEN-----------------------------------\n");
-        printf("  ID\t| Ten\t| Tuoi\t|  Gioi Tinh\t|  Toan\t|  Ly\t|  Hoa\t|   DiemTB\t|  HocLuc\n");
-        for (Student student : listStudent)
-        {
-            PRINT_INFORMATION(student);
-        }
+                printf("- Nhan phim '1' => De Hien thi Danh sach\n");
+            );
+    );        
 
-        printf("- Nhan phim '1' => De Hien thi Danh sach\n");
-        printf("- Nhan phim Bat ky => De Thoat chuc nang\n");
-
-    } while (key == 1);
 }
 
-/*-----------------------------CẬP NHẬT THÔNG TIN SINH VIÊN----------------------------*/
+/*
+ * Function: Method updateStudent
+ * Description: Cập nhật thông tin Sinh viên theo ID
+ */
 void Menu::updateStudent()
 {
     char name[20];
@@ -291,113 +432,183 @@ void Menu::updateStudent()
     float math;
     float physic;
     float chemistry;
-    uint8_t id;
+
+    uint8_t choice;
     uint8_t key;
+    uint8_t id;
     vector<Student> *ptr = &listStudent;
+    bool haveStudent = false;
+    
+    CHECK_LISTSTUDENT
+    (
+        "KHONG THE CAP NHAT THONG TIN !\n",
+        DOWHILE_METHODMENU
+        (
+            printf("/* CAP NHAT THONG TIN SINH VIEN */\n");
 
-    do
-    {
-        printf("/* CAP NHAT THONG TIN SINH VIEN */\n");
-
-        ENTER_INFORMATION("Nhap ID sinh vien: ", "%d", &id, 0);
-
-        for (int index = 0; index < ptr->size(); index++)
-        {
-            if ((ptr->at(index)).getIDStudent() == id)
+            ENTER_INFORMATION("Nhap ID sinh vien: ", "%d", &id, 0);
+            
+            for (int index = 0; index < ptr->size(); index++)
             {
-                ENTER_INFORMATION("Nhap ten: ", "%s", &name, 0);
+            
 
-                ENTER_INFORMATION("Nhap tuoi: ", "%d", &age, age > 100 || age < 1);
+                if ((ptr->at(index)).getIDStudent() == id)
+                {
+                    printf("------CHON THONG TIN CAN CAP NHAT------\n");
+                    printf("1. TEN\n");
+                    printf("2. TUOI\n");
+                    printf("3. GIOI TINH\n");
+                    printf("4. DIEM TOAN\n");
+                    printf("5. DIEM LY\n");
+                    printf("6. DIEM HOA\n");
+                    printf("7. Thoat\n");
+                    printf("-------------------------------------------\n");
+                    ENTER_INFORMATION("- Nhan phim : ", "%d", &choice, 0);
+                    
+                    switch (choice)
+                    {
+                    case 1:
+                        ENTER_INFORMATION("Nhap ten: ", "%s", &name, 0);
+                        (ptr->at(index)).setNameStudent(name);
+                        break;
+                    case 2:
+                        ENTER_INFORMATION("Nhap tuoi: ", "%d", &age, age > 100 || age < 1);
+                        (ptr->at(index)).setAgeStudent(age);
+                        break;
+                    case 3:
+                        ENTER_INFORMATION("Nhap gioi tinh: ", "%s", &gender, 0);
+                        (ptr->at(index)).setGenderStudent(gender);
+                        break;
+                    case 4:
+                        ENTER_INFORMATION("Nhap diem toan: ", "%f", &math, math > 10 || math < 0);
+                        (ptr->at(index)).setScoreMath(math);
+                        break;
+                    case 5:
+                        ENTER_INFORMATION("Nhap diem ly: ", "%f", &physic, physic > 10 || physic < 0);
+                        (ptr->at(index)).setScorePhysic(physic);
+                        break;
+                    case 6:
+                        ENTER_INFORMATION("Nhap diem hoa: ", "%f", &chemistry, chemistry > 10 || chemistry < 0);
+                        (ptr->at(index)).setScoreChemistry(chemistry);
+                        break;
+                    case 7:
+                        break;
+                    default:
+                        printf("KHONG DUNG LUA CHON, VUI LONG NHAP LAI\n");
+                        break;
+                    }
 
-                ENTER_INFORMATION("Nhap gioi tinh: ", "%s", &gender, 0);
+                    haveStudent = 1;
 
-                ENTER_INFORMATION("Nhap diem toan: ", "%f", &math, math > 10 || math < 0);
-
-                ENTER_INFORMATION("Nhap diem ly: ", "%f", &physic, physic > 10 || physic < 0);
-
-                ENTER_INFORMATION("Nhap diem hoa: ", "%f", &chemistry, chemistry > 10 || chemistry < 0);
-
-                (ptr->at(index)).setNameStudent(name);
-                (ptr->at(index)).setAgeStudent(age);
-                (ptr->at(index)).setGenderStudent(gender);
-                (ptr->at(index)).setScoreMath(math);
-                (ptr->at(index)).setScorePhysic(physic);
-                (ptr->at(index)).setScoreChemistry(chemistry);
-
-                break;
+                    break;
+                }
             }
-        }
+            
+            if (haveStudent != 1)
+            {
+                printf("KHONG TIM THAY SINH VIEN\n");
+            }
 
-        printf("- Nhan phim '1' => De tiep tuc cap nhat Thong tin sinh vien\n");
-        printf("- Nhan phim Bat ky => De Thoat chuc nang\n");
-        scanf("%d", &key);
+            printf("- Nhan phim '1' => De tiep tuc cap nhat Thong tin sinh vien\n");
 
-    } while (key == 1);
+        );
+    ); 
 }
 
-/*-----------------------------------XÓA SINH VIÊN-------------------------------------*/
+/*
+ * Function: Method eraseStudent
+ * Description: Xóa Sinh viên theo ID
+ */
 void Menu::eraseStudent()
 {
 
     uint8_t id;
     uint8_t key;
+    bool haveStudent = false;
     vector<Student> *ptr = &listStudent;
 
-    do
-    {
-        printf("/* XOA SINH VIEN */\n");
+    CHECK_LISTSTUDENT
+    (
+        "KHONG THE XOA SINH VIEN !\n",
+        DOWHILE_METHODMENU
+        (
+            printf("/* XOA SINH VIEN */\n");
 
-        ENTER_INFORMATION("Nhap ID sinh vien: ", "%d", &id, 0);
+            ENTER_INFORMATION("Nhap ID sinh vien: ", "%d", &id, 0);
 
-        for (int index = 0; index < ptr->size(); index++)
-        {
-            if ((ptr->at(index)).getIDStudent() == id)
+            for (int index = 0; index < ptr->size(); index++)
             {
-                ptr->erase(ptr->begin() + index);
+                if ((ptr->at(index)).getIDStudent() == id)
+                {
+                    ptr->erase(ptr->begin() + index);
+                    haveStudent = 1;
+                    printf("*Da xoa sinh vien*\n");
 
-                break;
+                    break;
+                }
             }
-        }
 
-        printf("- Nhan phim '1' => De tiep tuc Xoa sinh vien\n");
-        printf("- Nhan phim Bat ky => De Thoat chuc nang\n");
-        scanf("%d", &key);
+            if (haveStudent != 1)
+            {
+                printf("KHONG TIM THAY SINH VIEN\n");
+            }
 
-    } while (key == 1);
+            printf("- Nhan phim '1' => De tiep tuc Xoa sinh vien\n");
+        );
+    ); 
 }
 
-/*----------------------------------TÌM KIẾM SINH VIÊN----------------------------------*/
+/*
+ * Function: Method searchStudent
+ * Description: Tìm kiếm thông tin Svien theo tên
+ */
 void Menu::searchStudent()
 {
 
     char name[20];
     uint8_t key;
+    bool haveStudent = false;
     vector<Student> *ptr = &listStudent;
 
-    do
-    {
-        printf("/* TIM KIEM SINH VIEN */\n");
+    CHECK_LISTSTUDENT
+    (
+        "KHONG THE TIM KIEM SINH VIEN !\n",
+        DOWHILE_METHODMENU
+        (
+            printf("/* TIM KIEM SINH VIEN */\n");
 
-        ENTER_INFORMATION("Nhap tem sinh vien: ", "%s", &name, 0);
+            ENTER_INFORMATION("Nhap ten sinh vien: ", "%s", &name, 0);
 
-        for (int index = 0; index < ptr->size(); index++)
-        {
-            if (strcmp(ptr->at(index).getNameStudent(), name) == 0)
+            for (int index = 0; index < ptr->size(); index++)
             {
-                printf("  ID\t| Ten\t| Tuoi\t|  Gioi Tinh\t|  Toan\t|  Ly\t|  Hoa\t|   DiemTB\t|  HocLuc\n");
-                PRINT_INFORMATION(ptr->at(index));
-                break;
+                if (strcmp(ptr->at(index).getNameStudent(), name) == 0)
+                {
+                    printf("  ID\t| Ten\t| Tuoi\t|  Gioi Tinh\t|  Toan\t|  Ly\t|  Hoa\t|   DiemTB\t|  HocLuc\n");
+                    PRINT_INFORMATION(ptr->at(index));
+                    haveStudent = 1;
+
+                    break;
+                }
             }
-        }
 
-        printf("- Nhan phim '1' => De tiep tuc Tim kiem sinh vien\n");
-        printf("- Nhan phim Bat ky => De Thoat chuc nang\n");
-        scanf("%d", &key);
+            if (haveStudent != 1)
+            {
+                printf("KHONG TIM THAY SINH VIEN\n");
+            }
 
-    } while (key == 1);
+            printf("- Nhan phim '1' => De tiep tuc Tim kiem sinh vien\n");
+        );
+    ); 
+
 }
 
-/*--------------------------------HÀM ĐỔI CHỖ SINH VIÊN---------------------------------*/
+/*
+ * Function: swap
+ * Description: Đổi chỗ 2 sinh viên dùng cho thuật toán sắp xếp
+ * Input:
+ *   student1 - Con trỏ kiểu Student
+ *   student2 - Con trỏ kiểu Student
+ */
 void swap(Student *student1, Student *student2)
 {
     Student student = *student1;
@@ -405,59 +616,72 @@ void swap(Student *student1, Student *student2)
     *student2 = student;
 }
 
-/*-------------------------------SẮP XẾP SINH VIÊN THEO GPA----------------------------*/
+/*
+ * Function: Method softOfByGPA
+ * Description: Sắp xếp sinh viên theo điểm TB
+ */
 void Menu::softOfByGPA()
 {
     uint8_t key;
 
-    do
-    {
-        for (int indexA = 0; indexA < listStudent.size() - 1; indexA++)
-        {
-            Student *student1 = &listStudent.at(indexA);
-            for (int indexB = 1; indexB < listStudent.size(); indexB++)
+    CHECK_LISTSTUDENT
+    (
+        "KHONG THE SAP XEP SINH VIEN THEO GPA !\n",
+        DOWHILE_METHODMENU
+        (
+            for (int indexA = 0; indexA < listStudent.size() - 1; indexA++)
             {
-                Student *student2 = &listStudent.at(indexB);
-                if (student1->getScoreAvarge() > student2->getScoreAvarge())
+                Student *student1 = &listStudent.at(indexA);
+                for (int indexB = 1; indexB < listStudent.size(); indexB++)
                 {
-                    swap(student1, student2);
+                    Student *student2 = &listStudent.at(indexB);
+                    if (student1->getScoreAvarge() > student2->getScoreAvarge())
+                    {
+                        swap(student1, student2);
+                    }
                 }
             }
-        }
 
-        printf("Da sap xep Danh sach Sinh Vien theo GPA\n");
-        printf("- Nhan phim Bat ky => De Thoat chuc nang\n");
-
-    } while (key == 1);
+            printf("*Da sap xep Danh sach Sinh Vien theo GPA*\n");
+        );
+    ); 
 }
 
-/*---------------------------------SẮP XẾP SINH VIÊN THEO TÊN-----------------------------*/
+/*
+ * Function: Method softOfByName
+ * Description: Sắp xếp sinh viên theo tên Sinh viên
+ */
 void Menu::softOfByName()
 {
     uint8_t key;
 
-    do
-    {
-        for (int indexA = 0; indexA < listStudent.size() - 1; indexA++)
-        {
-            Student *student1 = &listStudent.at(indexA);
-            for (int indexB = 1; indexB < listStudent.size(); indexB++)
+    CHECK_LISTSTUDENT
+    (
+        "KHONG THE SAP XEP SINH VIEN THEO TEN !\n",
+        DOWHILE_METHODMENU
+        (
+            for (int indexA = 0; indexA < listStudent.size() - 1; indexA++)
             {
-                Student *student2 = &listStudent.at(indexB);
-                if (student1->getNameStudent()[0] > student2->getNameStudent()[0])
+                Student *student1 = &listStudent.at(indexA);
+                for (int indexB = 1; indexB < listStudent.size(); indexB++)
                 {
-                    swap(student1, student2);
+                    Student *student2 = &listStudent.at(indexB);
+                    if (student1->getNameStudent()[0] > student2->getNameStudent()[0])
+                    {
+                        swap(student1, student2);
+                    }
                 }
             }
-        }
 
-        printf("Da sap xep Danh sach Sinh Vien theo Ten\n");
-        printf("- Nhan phim Bat ky => De Thoat chuc nang\n");
-
-    } while (key == 1);
+            printf("*Da sap xep Danh sach Sinh Vien theo Ten*\n");
+        );
+    ); 
 }
 
-/*-------------------------------------CHẠY CHƯƠNG TRÌNH----------------------------------*/
+/*
+ * Function: runProgram
+ * Description: Chương trình quản lý sinh viên
+ */
 void runProgram()
 {
 
@@ -475,6 +699,7 @@ void runProgram()
         printf("6. Sap Xep Sinh Vien theo Ten\n");
         printf("7. Hien thi Danh Sach Sinh Vien\n");
         printf("8. Thoat\n");
+        printf("-------------------------------------------\n");
         ENTER_INFORMATION("- Nhan phim de tiep tuc chuong trinh: ", "%d", &key, key > 8 || key < 1);
 
         switch (key)
