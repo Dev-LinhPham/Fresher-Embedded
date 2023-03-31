@@ -1,3 +1,9 @@
+/*
+* File: phamquanglinh_bt3.c
+* Author: Pham Quang Linh
+* Date: 07/03/2023
+* Description: Bài tập xử lý chuỗi ký tự 
+*/
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -8,13 +14,28 @@
 // Cau 3: Chuyen doi tat ca doan van thanh chu thuong
 // Cau 4: Chuyen doi tat ca doan van thanh chu hoa
 
+/*
+* Function: Struct typeString
+* Description: Chứa các member cần thiết để có 1 mảng là Size & địa chỉ đầu tiên của mảng
+* Input:
+*   None
+* Output:
+*   None
+*/
 typedef struct
 {
     uint16_t size;
     char *firstAdd;
 } typeString;
 
-/*------------------------------FUNCTION CODE-----------------------------*/
+/*
+* Function: Funtion Code
+* Description: Hiển thị các hàm chức năng để tương tác với chương trình
+* Input:
+*   None
+* Output:
+*   None
+*/
 void importString(typeString *string);// Nhập chuỗi
 void exportString(typeString string);// Xuất chuỗi
 int sizeString(typeString string);// Tính kích thước của chuỗi 
@@ -23,7 +44,14 @@ void firstCapitalize(typeString string);// Viết hoa chữ cái đầu tiên sa
 void lowerCaseAll(typeString string);// Viết thường cả chuỗi 
 void upperCaseAll(typeString string);// Viết hoa cả chuỗi 
 
-/*---------------------------------MAIN-----------------------------------*/
+/*
+* Function: Main
+* Description: Chạy chương trình 
+* Input:
+*   None
+* Output:
+*   None
+*/
 int main(int argc, char const *argv[])
 {
 
@@ -42,9 +70,14 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-
-/*-----------------------------NHẬP CHUÔI------------------------------*/
-/*  *string: trỏ tới chuỗi cần nhập  */
+/*
+* Function: importString
+* Description: Nhập chuỗi ký tự vào
+* Input:
+*   string - typeString* (trỏ tới mảng chuỗi cần nhập)
+* Output:
+*   None
+*/
 void importString(typeString *string)
 {
     printf("NHAP SO KY TU : ");
@@ -57,15 +90,27 @@ void importString(typeString *string)
     fgets(string->firstAdd, sizeof(char) * string->size, stdin);// Sử dụng hàm fgets để nhập cả ký tự ' '
 }
 
-/*-----------------------------XUẤT CHUỖI------------------------------*/
-/*  string: tham trị tới chuỗi  */
+/*
+* Function: exportString
+* Description: Xuất chuỗi ký tự đã nhập 
+* Input:
+*   string - typeString (mảng chuỗi cần xuất)
+* Output:
+*   None
+*/
 void exportString(typeString string)
 {
     puts(string.firstAdd);
 }
 
-/*------------------------ĐẾM SỐ KÝ TỰ CỦA CHUỖI-----------------------*/
-/*  string: tham trị tới chuỗi  */
+/*
+* Function: sizeString
+* Description: Đếm số ký tự của 1 chuỗi
+* Input:
+*   string - typeString (mảng chuỗi cần đếm)
+* Output:
+*   (i - 1) - int 
+*/
 int sizeString(typeString string)
 {
     int i = 0;
@@ -75,8 +120,14 @@ int sizeString(typeString string)
     return i - 1;
 }
 
-/*----------------------------ĐẢO NGƯỢC CHUỖI----------------------------*/
-/*  string: tham trị tới chuỗi  */
+/*
+* Function: revereString
+* Description: Đảo ngược từ trong mảng
+* Input:
+*   string - typeString (mảng chuỗi cần đảo ngược từ )
+* Output:
+*   None
+*/
 void revereString(typeString string)
 {
     //word đếm số từ trong chuỗi 
@@ -126,8 +177,14 @@ void revereString(typeString string)
     printf("\n");
 }
 
-/*------------------------VIẾT HOA CHỮ CÁI ĐẦU TIÊN SAU DẤU "."-----------------------*/
-/*  string: tham trị tới chuỗi  */
+/*
+* Function: firstCapitalize
+* Description: Viết hoa chữ cái đầu tiên sau dấu chấm của mảng
+* Input:
+*   string - typeString (mảng chuỗi cần xử lý)
+* Output:
+*   None
+*/
 void firstCapitalize(typeString string)
 {
     for (int i = 0; i < sizeString(string); i++)
@@ -143,8 +200,14 @@ void firstCapitalize(typeString string)
     exportString(string);
 }
 
-/*------------------------IN HOA TẤT CẢ CÁC CHỮ-----------------------*/
-/*  string: tham trị tới chuỗi  */
+/*
+* Function: upperCaseAll
+* Description: Viết hoa tất cả các chữ cái 
+* Input:
+*   string - typeString (mảng chuỗi cần xử lý)
+* Output:
+*   None
+*/
 void upperCaseAll(typeString string)
 {
 
@@ -158,8 +221,14 @@ void upperCaseAll(typeString string)
     exportString(string);
 }
 
-/*------------------------IN THƯỜNG TẤT CẢ CÁC CHỮ-----------------------*/
-/*  string: tham trị tới chuỗi  */
+/*
+* Function: lowerCaseAll
+* Description: Viết thường tất cả các chữ cái
+* Input:
+*   string - typeString (mảng chuỗi cần xử lý)
+* Output:
+*   None
+*/
 void lowerCaseAll(typeString string)
 {
 

@@ -779,12 +779,12 @@ void Employee::updateDataFromManager(Manager *manager)
 {
     int lastQuantityTable = Employee::quantityTable;
     Employee::quantityTable = manager->getQuantityTable();
-    for(int i = 0; i < lastQuantityTable; i++)
+    for(int i = 0; i < lastQuantityTable; i++) //Cập nhật thông tin danh sách món 
     {
         DinnerTable dinnerTable(*manager);
         listTable.at(i).updateListFood(*manager);
     }
-    for(int i = lastQuantityTable; i < Employee::quantityTable; i++)
+    for(int i = lastQuantityTable; i < Employee::quantityTable; i++) //Cập nhật thêm SL bàn nếu Manager có setup thêm 
     {
         DinnerTable dinnerTable(*manager);
         listTable.push_back(dinnerTable);
@@ -927,10 +927,10 @@ void runMainProgram()
         {
         case 1:
             runManagerProgram(&manager);
-            employee.getDataFromManager(&manager); 
+            employee.getDataFromManager(&manager); //Lấy data của Manager copy sang Emplyee
             break;
         case 2:
-            employee.updateDataFromManager(&manager);
+            employee.updateDataFromManager(&manager); //Cập nhật dữ liệu từ Manager -> Employee
             runEmployeeProgram(&employee);
             break;
         case 0:

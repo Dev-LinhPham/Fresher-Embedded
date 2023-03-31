@@ -1,3 +1,9 @@
+/*
+* File: phamquanglinh_bt2.c
+* Author: Pham Quang Linh
+* Date: 07/03/2023
+* Description: Bài tập Đọc số tiền 
+*/
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -11,13 +17,29 @@
 //             => |"765"| hàng Đồng
 // Phần hàng "Nghìn" + hàng "Đồng"  được xử lý ra từng TH => Nhảy đến hàm printCase() để in.
 
+
+/*
+* Function: Struct typeArray
+* Description: Chứa các member cần thiết để có 1 mảng là Size & địa chỉ đầu tiên của mảng
+* Input:
+*   None
+* Output:
+*   None
+*/
 typedef struct
 {
     uint8_t size;
     uint8_t *firstAdd;
 } typeArray;
 
-/*-------------------------FUNCTION CODE-------------------------*/
+/*
+* Function: Funtion Code
+* Description: Hiển thị các hàm chức năng để tương tác với chương trình
+* Input:
+*   None
+* Output:
+*   None
+*/
 void readUnit(uint8_t num); //Đọc phần đơn vị
 void readDecimal(uint8_t dec); //Đọc phần thập phân
 void inputNumber(uint32_t *number, typeArray *array); //Nhập số cần đọc
@@ -25,7 +47,14 @@ void printCase(uint8_t binTotal, typeArray array, uint8_t idx_last); //Đọc h�
 void readNumber(typeArray array); //Đọc số nhập vào ra chữ
 
 
-/*------------------------------MAIN---------------------------*/
+/*
+* Function: Main
+* Description: Chạy chương trình 
+* Input:
+*   None
+* Output:
+*   None
+*/
 int main(int argc, char const *argv[])
 {
     uint32_t num;
@@ -36,8 +65,14 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-/*---------------------ĐỔI RA ĐƠN VỊ------------------------*/
-/*  num: số nhập vào đổi ra chữ  */
+/*
+* Function: readUnit
+* Description: Đổi chữ số nhập vào ra chữ 
+* Input:
+*   num - uint8_t (chữ số nhập vào)
+* Output:
+*   None
+*/
 void readUnit(uint8_t num)
 {
     switch (num)
@@ -78,8 +113,14 @@ void readUnit(uint8_t num)
     }
 }
 
-/*---------------------HÀM ĐỔI RA THẬP PHÂN------------------------*/
-/*  dec: số nhập vào để ra thập phân  */
+/*
+* Function: readDecimal
+* Description: Đọc phần thập phân của từng hàng số
+* Input:
+*   dec - uint8_t (Vị trí chữ số nhập vào)
+* Output:
+*   None
+*/
 void readDecimal(uint8_t dec)
 {
     switch (dec)
@@ -107,9 +148,15 @@ void readDecimal(uint8_t dec)
     }
 }
 
-/*---------------------HÀM NHẬP SỐ------------------------*/
-/*  *number: trỏ đến số đã khai báo
-    *array: trỏ đến mảng chứa từng chữ số khi tách  */
+/*
+* Function: inputNumber
+* Description: Nhập số cần đọc và tách các thành các chữ số gán vào phần tử mảng
+* Input:
+*   number - uint32_t (số nhập vào)
+*   array - typeArray* (Mảng chứa các chữ số của số nhập vào)
+* Output:
+*   None
+*/
 void inputNumber(uint32_t *number, typeArray *array)
 {
     //Nhập số > 0 & < 1*10^6 
@@ -134,12 +181,16 @@ void inputNumber(uint32_t *number, typeArray *array)
     }
 }
 
-/*---------------------HÀM IN HÀNG "NGHÌN" & "ĐỒNG"------------------------*/
-/*  binTotal: giá trị tổng sau khi mã hóa nhị phân của hàng
-    array: mảng chứa các chữ số của số
-    idx_last:  vị trí chữ số cuối cùng của hàng                 
-    idx_last + 1: vị trí chữ số giữa của hàng
-    idx_last + 2: vị trí chữ số đầu tiên của hàng       */
+/*
+* Function: printCase
+* Description: Hàm in hàng "Nghìn" & "Đồng"
+* Input:
+*   binTotal - uint8_t (giá trị tổng sau khi mã hóa nhị phân của hàng)
+*   array - typeArray (Mảng chứa các chữ số của số nhập vào)
+*   idx_last - uint8_t (vị trí chữ số cuối cùng của hàng)
+* Output:
+*   None
+*/
 void printCase(uint8_t binTotal, typeArray array, uint8_t idx_last)
 {
     //Kiểm tra & in ra chữ số đầu tiên hàng "Nghìn" hoặc hàng "Đồng"
@@ -219,8 +270,14 @@ void printCase(uint8_t binTotal, typeArray array, uint8_t idx_last)
     }
 }
 
-/*---------------------HÀM ĐỌC SỐ NHẬP VÀO------------------------*/
-/* array: mảng chứa các chữ số của số */
+/*
+* Function: readNumber
+* Description: Hàm đọc chữ số nhập vào
+* Input:
+*   array - typeArray (Mảng chứa các chữ số của số nhập vào)
+* Output:
+*   None
+*/
 void readNumber(typeArray array)
 {
     //Đọc hàng "Triệu"

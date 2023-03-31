@@ -1,3 +1,9 @@
+/*
+* File: phamquanglinh_bt1.c
+* Author: Pham Quang Linh
+* Date: 07/03/2023
+* Description: Bài tập tìm kiếm số lần lặp lại của phần tử trong mảng
+*/
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -9,21 +15,42 @@
 //                                              7 xuat hien 2 lan
 //                                              8 xuat hien 3 lan
 
+/*
+* Function: Struct typeArray
+* Description: Chứa các member cần thiết để có 1 mảng là Size & địa chỉ đầu tiên của mảng
+* Input:
+*   None
+* Output:
+*   None
+*/
 typedef struct
 {
     uint8_t size;
     uint8_t *firstAdd;
 } typeArray;
 
-/*-----------------------------FUNCTION CODE---------------------------*/
+/*
+* Function: Funtion Code
+* Description: Hiển thị các hàm chức năng để tương tác với chương trình
+* Input:
+*   None
+* Output:
+*   None
+*/
 int randomN(int minN, int maxN); //Random giá trị từ minN -> maxN
 void randomArray(typeArray *array, uint8_t length); //Random mảng 
 void softArray(typeArray *array);// Sắp xếp mảng 
 void countArray(typeArray array);// Đếm số lần xuất hiện của phần tử 
 void printfArray(typeArray array);// In mảng
 
-
-/*------------------------------MAIN----------------------------------*/
+/*
+* Function: Main
+* Description: Chạy chương trình 
+* Input:
+*   None
+* Output:
+*   None
+*/
 int main(int argc, char const *argv[])
 {
     typeArray arr;
@@ -42,18 +69,29 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-
-/*-----------------RANDOM NUMBER------------------*/
-/* minN: giá trị nhỏ nhất để random
-   maxN: giá trị lớn nhất để random */
+/*
+* Function: randomN
+* Description: Random số từ giá trị min -> max
+* Input:
+*   minN - int (số nhỏ nhất có thể random)
+*   maxN - int (số lớn nhất có thể random)
+* Output:
+*   trả về giá trị kiểu int trong khoảng min -> max
+*/
 int randomN(int minN, int maxN)
 {
     return minN + rand() % (maxN + 1 - minN); //Trả về giá trị random cho mỗi phần tử của mảng
 }
 
-/*-----------------RANDOM ARRAY------------------*/
-/*  length: kích thước của mảng
-    *array: trỏ đến mảng cần random */
+/*
+* Function: randomArray
+* Description: Random ra 1 mảng có size = length và các phần từ có giá trị nằm trong khoảng min -> max 
+* Input:
+*   array - typeArray* (trỏ tới mảng muốn random)
+*   length - uint8_t (kích thước của mảng)
+* Output:
+*   None
+*/
 void randomArray(typeArray *array, uint8_t length)
 {
     srand((int)time(0));
@@ -68,8 +106,14 @@ void randomArray(typeArray *array, uint8_t length)
     }
 }
 
-/*-------------------SOFT ARRAY------------------*/
-/*  *array: trỏ đến mảng cần random  */
+/*
+* Function: softArray
+* Description: Sắp xếp mảng theo thứ tự tăng dần dựa theo thuật toán nổi bọt 
+* Input:
+*   array - typeArray* (trỏ tới mảng muốn sắp xếp)
+* Output:
+*   None
+*/
 void softArray(typeArray *array)
 {
     // Viết dựa trên lý thuyết thuật toán sắp xếp nối bọt
@@ -101,8 +145,14 @@ void softArray(typeArray *array)
     }
 }
 
-/*---------------COUNT THE NUMBER OF ELEMENTS REPEAT IN THE ARRAY-------------*/
-/*  array: Tham trị đến mảng  */
+/*
+* Function: countArray
+* Description: Đếm số lần xuất hiện giá trị trong các phần tử của mảng
+* Input:
+*   array - typeArray 
+* Output:
+*   None
+*/
 void countArray(typeArray array)
 {
     uint8_t counter = 1;// Biến đếm số lần xuất hiện của phần tử
@@ -126,8 +176,14 @@ void countArray(typeArray array)
     }
 }
 
-/*----------------------------PRINT ARRAY-----------------------------*/
-/*  array: Tham trị đến mảng  */
+/*
+* Function: printfArray
+* Description: In ra các phần tử của mảng 
+* Input:
+*   array - typeArray 
+* Output:
+*   None
+*/
 void printfArray(typeArray array)
 {
     for (int i = 0; i < array.size; i++)
